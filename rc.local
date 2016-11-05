@@ -31,8 +31,8 @@ iptables -t mangle -A DIVERT -j MARK --set-mark 1
 iptables -t mangle -A DIVERT -j ACCEPT
 iptables -t mangle -A INPUT -j ACCEPT
 iptables -t mangle -A PREROUTING -p tcp -m socket -j DIVERT
-iptables -t mangle -A PREROUTING ! -d 192.168.1.200/24 -p tcp --dport 80 -j TPROXY --tproxy-mark 0x1/0x1 --on-port 3129
-iptables -t mangle -A PREROUTING ! -d 192.168.1.200/24 -p tcp --dport 443 -j TPROXY --tproxy-mark 0x1/0x1 --on-port 3127
+iptables -t mangle -A PREROUTING ! -d 192.168.11.2/24 -p tcp --dport 80 -j TPROXY --tproxy-mark 0x1/0x1 --on-port 3129
+iptables -t mangle -A PREROUTING ! -d 192.168.11.2/24 -p tcp --dport 443 -j TPROXY --tproxy-mark 0x1/0x1 --on-port 3127
  
 /sbin/ip rule add fwmark 1 lookup 100
 /sbin/ip route add local 0.0.0.0/0 dev lo table 100
