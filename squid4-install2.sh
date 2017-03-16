@@ -136,7 +136,7 @@ cd squid-4.0.4
 make && make install
 
 cd -
-cp squid.conf /etc/squid/
+cp squid2.conf /etc/squid/squid.conf
 cp squid-cache.txt /etc/squid/
 cp squid-cache /etc/squid/
 cp squidrewrite /etc/squid/
