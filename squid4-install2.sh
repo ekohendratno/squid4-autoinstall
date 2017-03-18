@@ -7,43 +7,6 @@ echo -n "Masukan Nama Anda :"
 read nama
 echo "Hello $nama"
 echo "goodluck $nama"
-echo "oh iya ... !sebelumnya clone dari github git clone https://github.com/puji122/squid4-autoinstall.git"
-echo "|=====================================================|"
-echo "|                   Sajak Suara                       |"
-echo "|=====================================================|"
-echo "|     sesungguhnya suara itu tak bisa diredam         |"
-echo "|                mulut bisa dibungkam                 |"
-echo "|  namun siapa mampu menghentikan nyanyian bimbang    |" 
-echo "|    dan pertanyaan-pertanyaan dari lidah jiwaku      |"
-echo "|      suara-suara itu tak bisa dipenjarakan          |"
-echo "|          di sana bersemayam kemerdekaan             |"
-echo "|           apabila engkau memaksa diam               |"
-echo "|       akan kusiapkan untukmu: pemberontakan!        |" 
-echo "|                                                     |"
-echo "|        sesungguhnya suara itu bukan perampok        |"
-echo "|             yang ingin meraih hartamu               |" 
-echo "|                 ia ingin bicara                     |" 
-echo "|            mengapa kau kokang senjata               |"
-echo "|         dan gemetar ketika suara-suara itu          |"
-echo "|                menuntut keadilan?                   |"
-echo "|                                                     |"
-echo "|       sesungguhnya suara itu akan menjadi kata      |"
-echo "|          ialah yang mengajari aku bertanya          |"
-echo "|          dan pada akhirnya tidak bisa tidak         |" 
-echo "|                engkau harus menjawabnya             |"
-echo "|            apabila engkau tetap bertahan            |"
-echo "|         aku akan memburumu seperti kutukan          |"
-echo "|           Wiji Thukul - 1996 (Sajak Suara)          |" 
-echo "|=====================================================|"
-echo -e "Selamat datang di installasi server, \n"
-while true; do
-    read -p "Lanjutkan installasi?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Tolong jawab yes atau no";;
-    esac
-done
 
 # informasi perangkat keras                                                     
 echo "++ Perangkat keras "                                                      
@@ -69,15 +32,6 @@ cp modules /etc/modules
 
 apt-get update && apt-get upgrade -y
 
-echo -e "anda telah selesai mengupdate server, \n"
-while true; do
-    read -p "Lanjuut?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "jawab aja yes atau no";;
-    esac
-done      
 
 tar -xvzf libsodium-0.7.0.tar.gz
 
@@ -106,16 +60,6 @@ killall unbound
 /etc/init.d/unbound stop
 /etc/init.d/unbound restart
 
-echo -e "selamat anda telah menginstall dns-crypt & unbound, \n"
-while true; do
-    read -p "Lanjuut dong yahh?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "jawab aja yes atau no";;
-    esac
-done  
-
 cd -
 tar -xzf libecap-1.0.0.tar.gz
 cp DSI_ecap_youtube.so /usr/local/lib/
@@ -130,8 +74,8 @@ cd ecap_adapter_sample-1*
 ./configure && make && make install
 
 cd -
-tar -xzvf squid-4.0.4.tar.gz
-cd squid-4.0.4
+tar -xzvf squid-4.0.18.tar.gz
+cd squid-4.0.18
 ./configure '--prefix=/usr' '--bindir=/usr/bin' '--sbindir=/usr/sbin' '--libexecdir=/usr/lib/squid' '--sysconfdir=/etc/squid' '--localstatedir=/var' '--libdir=/usr/lib' '--includedir=/usr/include' '--datadir=/usr/share/squid' '--infodir=/usr/share/info' '--mandir=/usr/share/man' '--disable-dependency-tracking' '--disable-strict-error-checking' '--enable-async-io=24' '--with-aufs-threads=24' '--with-pthreads' '--enable-storeio=aufs,diskd' '--enable-removal-policies=lru,heap' '--with-aio' '--with-dl' '--disable-icmp' '--enable-esi' '--disable-icap-client' '--disable-wccp' '--disable-wccpv2' '--enable-kill-parent-hack' '--enable-cache-digests' '--disable-select' '--enable-http-violations' '--enable-linux-netfilter' '--enable-follow-x-forwarded-for' '--disable-ident-lookups' '--enable-x-accelerator-vary' '--enable-zph-qos' '--with-default-user=proxy' '--with-logdir=/var/log/squid' '--with-pidfile=/var/run/squid.pid' '--with-swapdir=/var/spool/squid' '--with-openssl' '--with-large-files' '--enable-ltdl-convenience' '--with-filedescriptors=65536' '--with-maxfd=65536' '--enable-storeid-rewrite-helpers' '--enable-ecap' '--enable-ssl-crtd' '--enable-err-languages=English' '--enable-default-err-language=English' '--build=x86_64' 'build_alias=x86_64' 'PKG_CONFIG_PATH=/usr/local/lib/pkgconfig'
 make && make install
 
@@ -160,12 +104,14 @@ chown proxy:proxy /etc/squid/squidrewrite
 
 cd
 chown -R proxy:proxy /var/spool/squid
-chown -R proxy:proxy /cache-0
-chown -R proxy:proxy /cache-1
+chown -R proxy:proxy /cc-0
+chown -R proxy:proxy /cc-1
+chown -R proxy:proxy /cc-2
 
 chmod -R 777 /var/spool/squid
-chmod -R 777 /cache-0
-chmod -R 777 /cache-1
+chmod -R 777 /cc-0
+chmod -R 777 /cc-1
+chmod -R 777 /cc-2
 
 cd /var/log/squid/
 touch access.log 
@@ -177,9 +123,7 @@ chmod -R 777 /var/log/squid/
 mkdir /etc/squid/ssl_certs/
 
 cd /etc/squid/ssl_certs/
-openssl genrsa -out squid.key 2048
-openssl req -new -key squid.key -out squid.csr -nodes -subj "/C=ID/ST=Jakarta/L=Jakarta/O=Hipster/CN=Young Hipster"
-openssl x509 -req -days 3652 -in squid.csr -signkey squid.key -out squid.crt
+
 
 cd
 /usr/lib/squid/ssl_crtd -c -s /etc/squid/ssl_db
