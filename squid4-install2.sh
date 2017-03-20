@@ -104,14 +104,14 @@ chown proxy:proxy /etc/squid/squidrewrite
 
 cd
 chown -R proxy:proxy /var/spool/squid
-chown -R proxy:proxy /cc-0
 chown -R proxy:proxy /cc-1
 chown -R proxy:proxy /cc-2
+chown -R proxy:proxy /cc-3
 
 chmod -R 777 /var/spool/squid
-chmod -R 777 /cc-0
 chmod -R 777 /cc-1
 chmod -R 777 /cc-2
+chmod -R 777 /cc-3
 
 cd /var/log/squid/
 touch access.log 
